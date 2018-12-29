@@ -1,0 +1,10 @@
+{
+    "prefix": "$",
+    "token": "NTI4Mjk5NjQ3MzcwNzg4ODY0.DwgRtw.WYHcOOPR2OkL3chatBJ8fJoO6BI",
+    "ClientID": 528299647370788864,
+    "link": "https://discordapp.com/api/oauth2/authorize?client_id=528299647370788864&scope=bot&permissions=1",
+    
+    "main_channel": "528302096529883158",
+
+    "insults": ["Suck my dick!", "Shove it!", "You a ligma generator!"]
+}

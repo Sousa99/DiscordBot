@@ -1,13 +1,8 @@
 const Discord = require('discord.js');
-const Constants = require('./constants.js');
+const { prefix, token, main_channel } = require('./config.json');
+
 
 const bot = new Discord.Client();
-const TOKEN = 'NTI4Mjk5NjQ3MzcwNzg4ODY0.DwgRtw.WYHcOOPR2OkL3chatBJ8fJoO6BI'
-
-const main_channel = "528302096529883158"
-
-// Client ID: 528299647370788864
-// https://discordapp.com/api/oauth2/authorize?client_id=528299647370788864&scope=bot&permissions=1
 
 console.log("Hello World");
 console.log("... I mean Discord World");
@@ -26,9 +21,17 @@ bot.on('ready', function() {
 });
 
 bot.on('message', function(message) {
-    if(message.content == "Hello") {
-        message.reply(choose_answer(Constants.insults));
+    if(!message.content.startsWith(prefix) || message.author.bot) return 
+    
+    const args = message.content.slice(prefix.length).split(/ +/);
+    const command = args.shift().toLowerCase();
+
+    switch (command) {
+        
+        case ("ping"):
+            message.reply("pong")
+            break;
     }
 });
 
-bot.login(TOKEN);
+bot.login(token);
