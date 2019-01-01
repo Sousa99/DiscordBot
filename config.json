@@ -6,5 +6,12 @@
     
     "main_channel": "528302096529883158",
 
-    "insults": ["Suck my dick!", "Shove it!", "You a ligma generator!"]
+    "credential_google": "./credentials.json",
+    "token_google": "./token_google_calendar.json",
+
+    "insults": ["Suck my dick!", "Shove it!", "You a ligma generator!"],
+    
+    "help_basic": "Options:",
+    "help_geral": ["$ping", "$beep", "$calendar"],
+    "help_calendar": ["$calendar listCalendars", "$calendar events ${calendarID}"]
 }

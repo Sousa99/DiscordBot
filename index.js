@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const { prefix, token, main_channel } = require('./config.json');
-
+const calendar = require('./calendar.js')
+const { prefix, token, main_channel, help_basic } = require('./config.json');
 
 const bot = new Discord.Client();
 
@@ -27,11 +27,56 @@ bot.on('message', function(message) {
     const command = args.shift().toLowerCase();
 
     switch (command) {
-        
+
         case ("ping"):
-            message.reply("pong")
+            message.reply("pong");
             break;
+        
+        case ("beep"):
+            message.reply("beep", {
+                tts: true 
+            });
+            break;
+        
+        case ("calendar"):
+            if (args.length == 1 && args[0] == "listCalendars")
+                calendar.listCalendars(message);
+            else if ((args.length == 1 || args.length == 2) && args[0] == "events")
+                calendar.listEvents(message, args[1]);
+            else {
+                const {help_calendar} = require('./config.json');
+                message.reply(printHelp(help_calendar));
+            }
+
+            break;
+        
+        default:
+        const {help_geral} = require('./config.json');
+        message.reply(printHelp(help_geral));
     }
 });
+
+
+/* TODO: Improve this one!
+var typing = false;
+var user_typing;
+bot.on('typingStart', function(channel, user) {
+    if (user == user_typing) return;
+
+    typing = true;
+    user_typing = user;
+    var message = "<@" + user.id + "> is currently typping, mess with him/her!\nWE RESPECT WAMEN ON THIS SERVER";
+    bot.channels.get(channel.id).send(message);
+});
+*/
+
+function printHelp(help) {
+    string = help_basic;
+    help.forEach(function(line) {
+        string += "\n" + line;
+    });
+
+    return string;
+}
 
 bot.login(token);
