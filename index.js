@@ -1,6 +1,9 @@
 const Discord = require('discord.js');
+const { credential_discord, prefix, main_channel, help_basic } = require('./config.json')
+const { token } = require(credential_discord);
+
 const calendar = require('./calendar.js')
-const { prefix, token, main_channel, help_basic } = require('./config.json');
+const youtube = require('./youtube.js')
 
 const bot = new Discord.Client();
 
@@ -33,6 +36,7 @@ bot.on('message', function(message) {
             break;
         
         case ("beep"):
+            // TODO: Say only "beep"
             message.reply("beep", {
                 tts: true 
             });
@@ -49,6 +53,12 @@ bot.on('message', function(message) {
             }
 
             break;
+
+        case ("youtube"):
+            // TODO: Help
+            youtube.subscriptionsList(message);
+            break;
+            
         
         default:
         const {help_geral} = require('./config.json');

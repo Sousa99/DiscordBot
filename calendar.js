@@ -2,7 +2,7 @@ const fs = require('fs');
 const {google} = require('googleapis');
 const googleAuth = require('google-auth-library');
 
-const {credential_google, token_google} = require('./config.json');
+const {credential_google, token_google_calendar} = require('./config.json');
 
 const max_calendars_shown = 100;
 const max_events_shown = 15;
@@ -16,7 +16,7 @@ var oauth2Client = new googleAuth.OAuth2Client(
   googleSecrets.redirect_uris[0]
 );
 
-const token = fs.readFileSync(token_google);
+const token = fs.readFileSync(token_google_calendar);
 oauth2Client.setCredentials(JSON.parse(token));
 
 /**
