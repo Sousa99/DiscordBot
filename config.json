@@ -1,5 +1,6 @@
 {
     "credential_discord": "./credentials/credentials_discord.json",
+    "credential_script": "./credentials/create.js",
     "credential_google": "./credentials/credentials_google.json",
     "token_google_calendar": "./credentials/token_google_calendar.json",
     "token_google_youtube": "./credentials/token_google_youtube.json",
@@ -22,7 +23,7 @@
         "admin": []
     },
     "help_youtube": {
-        "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating"],
+        "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating", "$youtube showPlaylists"],
         "admin": []
     }
 }

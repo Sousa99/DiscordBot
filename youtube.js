@@ -7,6 +7,9 @@ const {credential_google, token_google_youtube} = require('./config.json');
 const max_video_title = 50;
 const max_subscriptions_shown = 50;
 const max_videos_shown = 10;
+const max_playlists_shown = 10;
+// TODO: Others
+const related_playlists_index = ["uploads"]; // "likes", "favorites", "watchHistory", "watchLater"
 
 const googleSecrets = JSON.parse(fs.readFileSync(credential_google)).installed;
 var oauth2Client = new googleAuth.OAuth2Client(
@@ -42,7 +45,7 @@ function subscriptionsList(message) {
             if (channels.length == 0) {
                 var string = "The user is not subscribed to any channel.";
             } else {
-                var string = "Channels that the user is subscribed to:"
+                var string = "Channels that the user is subscribed to: ( max 50 :( )"
                 channels.forEach((element, i) => {
                     string += "\n" + (i + 1) + ". " + printChannel(element);
                 });
@@ -76,7 +79,8 @@ function subscribersList(message) {
             if (channels.length == 0) {
                 var string = "There are no users subscribed to the user.";
             } else {
-                var string = "Channels/Users that are subscribed to the user: " + channels.length;
+                // TODO: Exchange ":(" for emoji in discord
+                var string = "Channels/Users that are subscribed to the user: ( max 50 :( ) ";
                 channels.forEach((element, i) => {
                     string += "\n" + (i + 1) + ". " + printChannel(element);
                 });
@@ -126,6 +130,93 @@ function videosByRatingList(message, rating) {
 }
 
 /**
+ * Lists up to 10 playslits created by user
+ * @param message Message to wich is going to be answered
+ * @param index index of playlist shown
+ */
+function relatedPlaylistsList(message, index) {
+    var service = google.youtube('v3');
+    service.channels.list({
+            auth: oauth2Client,
+            part: 'id,snippet,contentDetails',
+            mine: true,
+            maxResults: 1
+        },
+        
+        function(err, response) {
+            if (err) {
+                console.log("The API returned an error: " + err);
+                return;
+            }
+
+            var my_channel = response.data.items[0];
+            var related_playlists = my_channel.contentDetails.relatedPlaylists;
+
+            if (index == undefined) {
+                var string = "Playlists related to the user:";
+                related_playlists_index.forEach((element, i) => {
+                    playlist_id = related_playlists[element];
+                    
+                    service.playlists.list({
+                        auth: oauth2Client,
+                        part: 'id,snippet,status',
+                        id: playlist_id,
+                        maxResults: 1
+                    },
+                    
+                    function(err, response) {
+                        if (err) {
+                            console.log("The API returned an error: " + err);
+                            return;
+                        }
+            
+                        var playlist = response.data.items[0];
+                        string += "\n" + i + ". " + printPlaylist(playlist);
+
+                        message.reply(string);
+                    });
+
+                });
+            }
+        });
+}
+
+/**
+ * Lists up to 10 playslits created by user
+ * @param message Message to wich is going to be answered
+ * @param index index of playlist shown
+ */
+function createdPlaylistsList(message, index) {
+    var service = google.youtube('v3');
+    service.playlists.list({
+            auth: oauth2Client,
+            part: 'id,snippet,status',
+            mine: true,
+            maxResults: max_playlists_shown
+        },
+        
+        function(err, response) {
+            if (err) {
+                console.log("The API returned an error: " + err);
+                return;
+            }
+
+            var playlists = response.data.items;
+            if (playlists.length == 0) {
+                var string = "The user has not created any playlists.";
+            } else if (index == undefined) {
+                var string = "Playlists created by the user:";
+                playlists.forEach((element, i) => {
+                    string += "\n" + i + ". " + printPlaylist(element);
+                });
+            }
+
+            message.reply(string);
+        });
+}
+
+
+/**
  * Prints the information about a channel
  * @param channel channel to be printed
  * @return string
@@ -148,8 +239,19 @@ function printVideo(video) {
         Link: <https://www.youtube.com/watch?v=${video.id}> - ${rating}% like ratio`;
 }
 
+/**
+ * Prints the information about a video
+ * @param playlist playlist to be printed
+ * @return string
+ */
+function printPlaylist(playlist) {
+    return `${playlist.snippet.title} - ${playlist.snippet.description} - Status: ${playlist.status.privacyStatus} => <https://www.youtube.com/playlist?list=${playlist.id}>`;
+}
+
 module.exports = {
     subscriptionsList,
     subscribersList,
-    videosByRatingList
+    videosByRatingList,
+    relatedPlaylistsList,
+    createdPlaylistsList
 }

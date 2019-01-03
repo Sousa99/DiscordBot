@@ -1,6 +1,12 @@
 const Discord = require('discord.js');
-const { credential_discord, prefix, main_channel, help_basic } = require('./config.json')
+const { credential_discord, credential_script, prefix, main_channel, help_basic } = require('./config.json')
 const { token, ClientID } = require(credential_discord);
+
+const create_credentials = false;
+if (create_credentials) {
+    credentials = require('./credentials/create.js');
+    return;
+}
 
 const calendar = require('./calendar.js')
 const youtube = require('./youtube.js')
@@ -59,10 +65,13 @@ bot.on('message', function(message) {
                 youtube.subscriptionsList(message);
             else if (args.length == 1 && args[0] == "showSubscribers")
                 youtube.subscribersList(message);
-            else if (args.length == 2 && args[0] == "videosByRatingList") {
+            else if (args.length == 2 && args[0] == "videosByRatingList")
                 youtube.videosByRatingList(message, args[1]);
+            else if ((args.length == 1) && args[0] == "showPlaylists") {
+                youtube.relatedPlaylistsList(message)
+                youtube.createdPlaylistsList(message);
             }
-            
+
             else {
                 const {help_youtube} = require('./config.json');
                 message.reply(printHelp(message.author.id, help_youtube));
@@ -92,7 +101,7 @@ bot.on('typingStart', function(channel, user) {
 */
 
 function printHelp(id, help) {
-    if (id == id) {
+    if (id == ClientID) {
         string = help_basic.basic + " " + help_basic.admin;
         help.admin.forEach(function(line) {
             string += "\n" + help_basic.admin + " " + line; 
