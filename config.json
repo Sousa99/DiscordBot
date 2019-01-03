@@ -1,0 +1,29 @@
+{
+    "credential_discord": "./credentials/credentials_discord.json",
+    "credential_script": "./credentials/create.js",
+    "credential_google": "./credentials/credentials_google.json",
+    "token_google_calendar": "./credentials/token_google_calendar.json",
+    "token_google_youtube": "./credentials/token_google_youtube.json",
+    
+    "prefix": "$",
+    "main_channel": "528302096529883158",
+
+    "insults": ["Shove it!", "You a ligma generator!"],
+    
+    "help_basic": {
+        "basic": "Options:",
+        "admin": "(Admin)"
+    },
+    "help_geral": {
+        "basic": ["$ping", "$beep", "$calendar", "$youtube"],
+        "admin": []
+    },
+    "help_calendar": {
+        "basic": ["$calendar listCalendars", "$calendar events ${calendarID}"],
+        "admin": []
+    },
+    "help_youtube": {
+        "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating", "$youtube showPlaylists"],
+        "admin": []
+    }
+}
