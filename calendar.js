@@ -21,6 +21,7 @@ oauth2Client.setCredentials(JSON.parse(token));
 
 /**
  * Lists all user's calendar.
+ * @param message Message to wich is going to be answered
  */
 async function listCalendars(message) {
     const calendar = google.calendar('v3');
@@ -47,7 +48,8 @@ async function listCalendars(message) {
 
 /**
  * Lists the next max_events_shown events on the user's calendar.
- * @returns string
+ * @param message Message to wich is going to be answered
+ * @param id id of the calendar to be shown
  */
 function listEvents(message, id) {
     const calendar = google.calendar('v3');
@@ -75,15 +77,30 @@ function listEvents(message, id) {
         });
 }
 
+/**
+ * Prints the information about a calendar
+ * @param calendar calendar to be printed
+ * @return string
+ */
 function printCalendar(calendar) {
     return `${calendar.summary} - ${calendar.id}`;
 }
 
+/**
+ * Prints the information about an event
+ * @param event event to be printed
+ * @return string
+ */
 function printEvent(event) {
     const start = event.start.dateTime || event.start.date;
     return `${start} - ${event.summary}`;
 }
 
+/**
+ * Prints the information about a list of events
+ * @param events list of events to be printed
+ * @return string
+ */
 function printListEvents(events) {
     var string;
 

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { credential_discord, prefix, main_channel, help_basic } = require('./config.json')
-const { token } = require(credential_discord);
+const { token, ClientID } = require(credential_discord);
 
 const calendar = require('./calendar.js')
 const youtube = require('./youtube.js')
@@ -46,23 +46,34 @@ bot.on('message', function(message) {
             if (args.length == 1 && args[0] == "listCalendars")
                 calendar.listCalendars(message);
             else if ((args.length == 1 || args.length == 2) && args[0] == "events")
-                calendar.listEvents(message, args[1]);
+                calendar.listEvents(message.author.id, args[1]);
             else {
                 const {help_calendar} = require('./config.json');
-                message.reply(printHelp(help_calendar));
+                message.reply(printHelp(message.author.id, help_calendar));
             }
 
             break;
 
         case ("youtube"):
-            // TODO: Help
-            youtube.subscriptionsList(message);
+            if (args.length == 1 && args[0] == "showSubscriptions")
+                youtube.subscriptionsList(message);
+            else if (args.length == 1 && args[0] == "showSubscribers")
+                youtube.subscribersList(message);
+            else if (args.length == 2 && args[0] == "videosByRatingList") {
+                youtube.videosByRatingList(message, args[1]);
+            }
+            
+            else {
+                const {help_youtube} = require('./config.json');
+                message.reply(printHelp(message.author.id, help_youtube));
+            }
+
             break;
             
         
         default:
         const {help_geral} = require('./config.json');
-        message.reply(printHelp(help_geral));
+        message.reply(printHelp(message.author.id, help_geral));
     }
 });
 
@@ -80,9 +91,17 @@ bot.on('typingStart', function(channel, user) {
 });
 */
 
-function printHelp(help) {
-    string = help_basic;
-    help.forEach(function(line) {
+function printHelp(id, help) {
+    if (id == id) {
+        string = help_basic.basic + " " + help_basic.admin;
+        help.admin.forEach(function(line) {
+            string += "\n" + help_basic.admin + " " + line; 
+        });
+
+    } else
+        string = help_basic.basic;
+
+    help.basic.forEach(function(line) {
         string += "\n" + line;
     });
 

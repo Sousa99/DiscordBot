@@ -9,7 +9,20 @@
 
     "insults": ["Shove it!", "You a ligma generator!"],
     
-    "help_basic": "Options:",
-    "help_geral": ["$ping", "$beep", "$calendar"],
-    "help_calendar": ["$calendar listCalendars", "$calendar events ${calendarID}"]
+    "help_basic": {
+        "basic": "Options:",
+        "admin": "(Admin)"
+    },
+    "help_geral": {
+        "basic": ["$ping", "$beep", "$calendar", "$youtube"],
+        "admin": []
+    },
+    "help_calendar": {
+        "basic": ["$calendar listCalendars", "$calendar events ${calendarID}"],
+        "admin": []
+    },
+    "help_youtube": {
+        "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating"],
+        "admin": []
+    }
 }
