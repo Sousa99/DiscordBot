@@ -11,7 +11,7 @@
     "insults": ["Shove it!", "You a ligma generator!"],
     
     "help_basic": {
-        "basic": "Options:",
+        "basic": "Options: * means optional arguments",
         "admin": "(Admin)"
     },
     "help_geral": {
