@@ -14,6 +14,7 @@ if (create_credentials) {
 
 const calendar = require('./calendar.js')
 const youtube = require('./youtube.js')
+const people = require('./people.js')
 
 const bot = new Discord.Client();
 
@@ -81,6 +82,18 @@ bot.on('message', function(message) {
             else {
                 const {help_youtube} = require('./config.json');
                 message.reply(printHelp(message.author.id, help_youtube));
+            }
+
+            break;
+
+        case ("people"):
+            if (args.length == 1 && args[0] == "getMain") {
+                people.getMyContact(message);
+            }
+
+            else {
+                const {help_people} = require('./config.json');
+                message.reply(printHelp(message.author.id, help_people));
             }
 
             break;

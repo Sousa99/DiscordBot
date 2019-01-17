@@ -10,6 +10,10 @@ const YOUTUBE_CONST = {
     SCOPES: ['https://www.googleapis.com/auth/youtube'],
     TOKEN_PATH: './credentials/token_google_youtube.json'
 };
+const PEOPLE_CONST = {
+    SCOPES: ['profile', 'https://www.googleapis.com/auth/contacts.readonly'],
+    TOKEN_PATH: './credentials/token_google_people.json'
+};
 
 const {client_secret, client_id, redirect_uris} = require('./credentials_google.json').installed;
 const oAuth2Client = new google.auth.OAuth2(
@@ -18,6 +22,7 @@ const oAuth2Client = new google.auth.OAuth2(
 
 //getAccessToken(oAuth2Client, CALENDAR_CONST);
 //getAccessToken(oAuth2Client, YOUTUBE_CONST);
+//getAccessToken(oAuth2Client, PEOPLE_CONST);
 
 /**
  * Get and store new token after prompting for user authorization, and then

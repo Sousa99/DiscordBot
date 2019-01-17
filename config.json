@@ -4,6 +4,7 @@
     "credential_google": "./credentials/credentials_google.json",
     "token_google_calendar": "./credentials/token_google_calendar.json",
     "token_google_youtube": "./credentials/token_google_youtube.json",
+    "token_google_people": "./credentials/token_google_people.json",
     
     "prefix": "$",
     "main_channel": "528302096529883158",
@@ -25,6 +26,10 @@
     },
     "help_youtube": {
         "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating", "$youtube showPlaylists", "$youtube recommend ${videoId} ${startTime}* ${endTime}*"],
+        "admin": []
+    },
+    "help_people": {
+        "basic": ["$people getMain"],
         "admin": []
     }
 }
