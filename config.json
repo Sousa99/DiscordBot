@@ -19,11 +19,11 @@
         "admin": []
     },
     "help_calendar": {
-        "basic": ["$calendar listCalendars", "$calendar events ${calendarID}"],
+        "basic": ["$calendar listCalendars", "$calendar events ${calendarID}*"],
         "admin": []
     },
     "help_youtube": {
-        "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating", "$youtube showPlaylists"],
+        "basic": ["$youtube showSubscriptions", "$youtube showSubscribers", "$youtube videosByRatingList rating", "$youtube showPlaylists", "$youtube recommend ${videoId} ${startTime}* ${endTime}*"],
         "admin": []
     }
 }

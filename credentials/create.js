@@ -7,7 +7,7 @@ const CALENDAR_CONST = {
     TOKEN_PATH: './credentials/token_google_calendar.json'
 };
 const YOUTUBE_CONST = {
-    SCOPES: ['https://www.googleapis.com/auth/youtube.readonly'],
+    SCOPES: ['https://www.googleapis.com/auth/youtube'],
     TOKEN_PATH: './credentials/token_google_youtube.json'
 };
 

@@ -10,6 +10,7 @@ const max_videos_shown = 10;
 const max_playlists_shown = 10;
 // TODO: Others
 const related_playlists_index = ["uploads"]; // "likes", "favorites", "watchHistory", "watchLater"
+const recommendation_playlist = 'PLKxTXHAz5hR8t6eZdJcFqKE-OlXlQny6S';
 
 const googleSecrets = JSON.parse(fs.readFileSync(credential_google)).installed;
 var oauth2Client = new googleAuth.OAuth2Client(
@@ -215,6 +216,62 @@ function createdPlaylistsList(message, index) {
         });
 }
 
+/**
+ * Adds User Recommendation to Youtube Playlist
+ * @param message Message to wich is going to be answered
+ * @param link link to the added video
+ */
+function addRecomendation(message, link, startTime, endTime) {
+    // TODO: StartTime, EndTime; how it works emphasis on youtube side, not coding side
+    var details = {
+        videoId: getVideoId(link),
+        kind: 'youtube#video'
+    }
+
+    if (startTime != undefined)
+        details['startAt'] = startTime;
+    if (endTime != undefined)
+        details['endAt'] = endTime;
+
+    var service = google.youtube('v3');
+    service.playlistItems.insert({
+            auth: oauth2Client,
+            part: 'snippet',
+            resource: {
+                snippet : {
+                    playlistId : recommendation_playlist,
+                    resourceId : details
+                }
+            }
+        },
+        
+        function(err, response) {
+            if (err) {
+                console.log("The API returned an error: " + err);
+                return;
+            }
+
+            message.reply("Video added to Recomendations for User!");
+        })
+}
+
+/**
+ * Returns video id given link to youtube video
+ * @param link link to the added video
+ * @return id (String)
+ */
+function getVideoId(link) {
+    const link_trash = "https://www.youtube.com/watch?v=";
+    const time_trash = "&t=";
+
+    var video_id = link.replace(link_trash, "");
+    if ((pos = video_id.search(time_trash)) != -1) {
+        var time = video_id.slice(pos);
+        video_id = video_id.replace(time, "");
+    }
+
+    return video_id;
+}
 
 /**
  * Prints the information about a channel
@@ -253,5 +310,6 @@ module.exports = {
     subscribersList,
     videosByRatingList,
     relatedPlaylistsList,
-    createdPlaylistsList
+    createdPlaylistsList,
+    addRecomendation
 }

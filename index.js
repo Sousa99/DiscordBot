@@ -49,11 +49,11 @@ bot.on('message', function(message) {
             break;
         
         case ("calendar"):
-            if (args.length == 1 && args[0] == "listCalendars")
+            if (args.length == 1 && args[0] == "listCalendars") {
                 calendar.listCalendars(message);
-            else if ((args.length == 1 || args.length == 2) && args[0] == "events")
+            } else if ((args.length == 1 || args.length == 2) && args[0] == "events") {
                 calendar.listEvents(message, args[1]);
-            else {
+            } else {
                 const {help_calendar} = require('./config.json');
                 message.reply(printHelp(message, help_calendar));
             }
@@ -61,15 +61,17 @@ bot.on('message', function(message) {
             break;
 
         case ("youtube"):
-            if (args.length == 1 && args[0] == "showSubscriptions")
+            if (args.length == 1 && args[0] == "showSubscriptions") {
                 youtube.subscriptionsList(message);
-            else if (args.length == 1 && args[0] == "showSubscribers")
+            } else if (args.length == 1 && args[0] == "showSubscribers") {
                 youtube.subscribersList(message);
-            else if (args.length == 2 && args[0] == "videosByRatingList")
+            } else if (args.length == 2 && args[0] == "videosByRatingList") {
                 youtube.videosByRatingList(message, args[1]);
-            else if ((args.length == 1) && args[0] == "showPlaylists") {
-                youtube.relatedPlaylistsList(message)
+            } else if ((args.length == 1) && args[0] == "showPlaylists") {
+                youtube.relatedPlaylistsList(message);
                 youtube.createdPlaylistsList(message);
+            } else if ((args.length >= 2 || args.length <= 4) && args[0] == "recommend") {
+                youtube.addRecomendation(message, args[1], args[2], args[3]);
             }
 
             else {
