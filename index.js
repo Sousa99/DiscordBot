@@ -1,5 +1,9 @@
 const Discord = require('discord.js');
-const { credential_discord, credential_script, prefix, main_channel, help_basic } = require('./config.json')
+
+const { credential_discord, credential_script } = require('./config.json');
+const { admins } = require('./config.json');
+const { prefix, main_channel, help_basic } = require('./config.json')
+
 const { token, ClientID } = require(credential_discord);
 
 const create_credentials = false;
@@ -102,8 +106,13 @@ bot.on('typingStart', function(channel, user) {
 });
 */
 
+/**
+ * Print help given an help type structure
+ * @param id id of the user whop sent the request
+ * @param help structure
+ */
 function printHelp(id, help) {
-    if (id == ClientID) {
+    if (isAdmin(id)) {
         string = help_basic.basic + " " + help_basic.admin;
         help.admin.forEach(function(line) {
             string += "\n" + help_basic.admin + " " + line; 
@@ -117,6 +126,15 @@ function printHelp(id, help) {
     });
 
     return string;
+}
+
+/**
+ * Verifies if user who sent request is admin
+ * @param id of who sent the message
+ * @return boolean
+ */
+function isAdmin(id) {
+    return admins.includes(id);
 }
 
 bot.login(token);
