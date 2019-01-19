@@ -43,14 +43,37 @@ bot.on('message', function(message) {
     switch (command) {
 
         case ("ping"):
+            if (args.length != 0)
+                break;
+            
             message.reply("pong");
             break;
         
         case ("beep"):
+            if (args.length != 0)
+                break;
+
             // TODO: Say only "beep"
             message.reply("beep", {
                 tts: true 
             });
+            break;
+
+        case ("recommend"):
+            const fs = require('fs');
+            const {recommendations_path, recommendations_break} = require('./config.json');
+            var recommendation = message.content.substr(message.content.indexOf(" ") + 1);
+
+            var string = '\n' + recommendations_break + '\n';
+            string += "Server: " + message.guild.name + " (" + message.channel.name + ")\n";
+            string += "User: " + message.author.username + " (" + message.author.id + ")\n";
+            string += "Recomendation: " + recommendation;
+
+            fs.appendFile(recommendations_path, string, (err) => {
+                if (err) console.error(err);
+                message.reply("Recommendation sent to administrator, thanks!");
+                });
+
             break;
         
         case ("calendar"):

@@ -6,6 +6,9 @@
     "token_google_youtube": "./credentials/token_google_youtube.json",
     "token_google_people": "./credentials/token_google_people.json",
     
+    "recommendations_path": "./recommendations.txt",
+    "recommendations_break": "-------------------------------------------------------",
+
     "prefix": "$",
     "main_channel": "528302096529883158",
     "admins": ["364860021592555520"],
@@ -17,7 +20,7 @@
         "admin": "(Admin)"
     },
     "help_geral": {
-        "basic": ["$ping", "$beep", "$calendar", "$youtube"],
+        "basic": ["$ping", "$beep", "$calendar", "$youtube", "$recommend ${recommendation}"],
         "admin": []
     },
     "help_calendar": {
