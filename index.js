@@ -69,6 +69,7 @@ bot.on('message', function(message) {
             string += "User: " + message.author.username + " (" + message.author.id + ")\n";
             string += "Recomendation: " + recommendation;
 
+            // TODO: Solve problem, promise not handled properly
             fs.appendFile(recommendations_path, string, (err) => {
                 if (err) console.error(err);
                 message.reply("Recommendation sent to administrator, thanks!");

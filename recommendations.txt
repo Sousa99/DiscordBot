@@ -1,1 +1,8 @@
  ------ RECOMMENDATIONS MADE FROM USERS ------
+Server: Sousa's Kingdom (general)
+User: Rodrigo Sousa (364860021592555520)
+Recomendation: Instagram API: list folowers and following
+-------------------------------------------------------
+Server: Sousa's Kingdom (general)
+User: Rodrigo Sousa (364860021592555520)
+Recomendation: Instagram API: verify if following or followed
