@@ -17,13 +17,12 @@ Structure Tree:
     │   calendar.js
     │   config.json
     │   index.js
-    │   insatgram.js
+    │   instagram.js
     │   package-lock.json
     │   package.json
     │   people.js
     │   README.md
     │   recommendations.txt
-    │   tree.txt
     │   youtube.js
     │   
     ├───credentials
