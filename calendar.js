@@ -21,9 +21,9 @@ oauth2Client.setCredentials(JSON.parse(token));
 
 /**
  * Lists all user's calendar.
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  */
-async function listCalendars(message) {
+async function listCalendars(callback) {
     const calendar = google.calendar('v3');
     calendar.calendarList.list({
             auth: oauth2Client,
@@ -41,17 +41,17 @@ async function listCalendars(message) {
                 string += "\n" + i + ". " + printCalendar(element);
             });
 
-            message.reply(string);
+            callback.reply(string);
         }
     );
   }
 
 /**
  * Lists the next max_events_shown events on the user's calendar.
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  * @param id id of the calendar to be shown
  */
-function listEvents(message, id) {
+function listEvents(callback, id) {
     const calendar = google.calendar('v3');
 
     if (id == undefined)
@@ -73,7 +73,7 @@ function listEvents(message, id) {
             }
 
             var events = response.data.items;
-            message.reply(printListEvents(events));
+            callback.reply(printListEvents(events));
         });
 }
 

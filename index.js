@@ -12,11 +12,17 @@ if (create_credentials) {
     return;
 }
 
+class Output {
+    constructor(method) { this.method = method; }
+    reply(text) { this.method(text); }
+}
+
 const calendar = require('./calendar.js')
 const youtube = require('./youtube.js')
 const people = require('./people.js')
 
 const bot = new Discord.Client();
+let basic_output = new Output(console.log);
 
 console.log("Hello World");
 console.log("... I mean Discord World");
@@ -28,7 +34,6 @@ function choose_answer(array) {
     return array[random];
 }
 
-
 bot.on('ready', function() {
     console.log("I'm ready master!");
     bot.channels.get(main_channel).send("I'm ready to serve you master!");
@@ -39,6 +44,7 @@ bot.on('message', function(message) {
     
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
+    const output = basic_output;
 
     switch (command) {
 
@@ -81,43 +87,43 @@ bot.on('message', function(message) {
             if (args.length == 1 && args[0] == "listCalendars") {
                 calendar.listCalendars(message);
             } else if ((args.length == 1 || args.length == 2) && args[0] == "events") {
-                calendar.listEvents(message, args[1]);
+                calendar.listEvents(output, args[1]);
             } else {
                 const {help_calendar} = require('./config.json');
-                message.reply(printHelp(message, help_calendar));
+                output.reply(printHelp(message, help_calendar));
             }
 
             break;
 
         case ("youtube"):
             if (args.length == 1 && args[0] == "showSubscriptions") {
-                youtube.subscriptionsList(message);
+                youtube.subscriptionsList(output);
             } else if (args.length == 1 && args[0] == "showSubscribers") {
-                youtube.subscribersList(message);
+                youtube.subscribersList(output);
             } else if (args.length == 2 && args[0] == "videosByRatingList") {
-                youtube.videosByRatingList(message, args[1]);
+                youtube.videosByRatingList(output, args[1]);
             } else if ((args.length == 1) && args[0] == "showPlaylists") {
-                youtube.relatedPlaylistsList(message);
-                youtube.createdPlaylistsList(message);
+                youtube.relatedPlaylistsList(output);
+                youtube.createdPlaylistsList(output);
             } else if ((args.length >= 2 || args.length <= 4) && args[0] == "recommend") {
-                youtube.addRecomendation(message, args[1], args[2], args[3]);
+                youtube.addRecomendation(output, args[1], args[2], args[3]);
             }
 
             else {
                 const {help_youtube} = require('./config.json');
-                message.reply(printHelp(message.author.id, help_youtube));
+                output.reply(printHelp(message.author.id, help_youtube));
             }
 
             break;
 
         case ("people"):
             if (args.length == 1 && args[0] == "getMain") {
-                people.getMyContact(message);
+                output.getMyContact(message);
             }
 
             else {
                 const {help_people} = require('./config.json');
-                message.reply(printHelp(message.author.id, help_people));
+                output.reply(printHelp(message.author.id, help_people));
             }
 
             break;
@@ -125,7 +131,7 @@ bot.on('message', function(message) {
         
         default:
         const {help_geral} = require('./config.json');
-        message.reply(printHelp(message.author.id, help_geral));
+        output.reply(printHelp(message.author.id, help_geral));
     }
 });
 

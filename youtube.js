@@ -24,9 +24,9 @@ oauth2Client.setCredentials(JSON.parse(token));
 
 /**
  * Lists up to 50 of the channels subscribed to
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  */
-function subscriptionsList(message) {
+function subscriptionsList(callback) {
     var service = google.youtube('v3');
     service.subscriptions.list({
             auth: oauth2Client,
@@ -52,15 +52,15 @@ function subscriptionsList(message) {
                 });
             }
 
-            message.reply(string);
+            callback.reply(string);
         });
 }
 
 /**
  * Lists up to 50 of the channels subscribed to you
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  */
-function subscribersList(message) {
+function subscribersList(callback) {
     var service = google.youtube('v3');
     service.subscriptions.list({
             auth: oauth2Client,
@@ -87,18 +87,18 @@ function subscribersList(message) {
                 });
             }
 
-            message.reply(string);
+            callback.reply(string);
         });
 }
 
 /**
  * Lists up to 10 videos that the user liked or disliked
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  * @param rating "like" or "dislike"
  */
-function videosByRatingList(message, rating) {
+function videosByRatingList(callback, rating) {
     if (rating != "like" && rating != "dislike") {
-        message.reply("\"" + rating + "\" is not a valid rating. Use \"like\" or \"dislike\"");
+        callback.reply("\"" + rating + "\" is not a valid rating. Use \"like\" or \"dislike\"");
         return;
     }
 
@@ -126,16 +126,16 @@ function videosByRatingList(message, rating) {
                 });
             }
 
-            message.reply(string);
+            callback.reply(string);
         });
 }
 
 /**
  * Lists up to 10 playslits created by user
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  * @param index index of playlist shown
  */
-function relatedPlaylistsList(message, index) {
+function relatedPlaylistsList(callback, index) {
     var service = google.youtube('v3');
     service.channels.list({
             auth: oauth2Client,
@@ -174,7 +174,7 @@ function relatedPlaylistsList(message, index) {
                         var playlist = response.data.items[0];
                         string += "\n" + i + ". " + printPlaylist(playlist);
 
-                        message.reply(string);
+                        callback.reply(string);
                     });
 
                 });
@@ -184,10 +184,10 @@ function relatedPlaylistsList(message, index) {
 
 /**
  * Lists up to 10 playslits created by user
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  * @param index index of playlist shown
  */
-function createdPlaylistsList(message, index) {
+function createdPlaylistsList(callback, index) {
     var service = google.youtube('v3');
     service.playlists.list({
             auth: oauth2Client,
@@ -212,16 +212,16 @@ function createdPlaylistsList(message, index) {
                 });
             }
 
-            message.reply(string);
+            callback.reply(string);
         });
 }
 
 /**
  * Adds User Recommendation to Youtube Playlist
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  * @param link link to the added video
  */
-function addRecomendation(message, link, startTime, endTime) {
+function addRecomendation(callback, link, startTime, endTime) {
     // TODO: StartTime, EndTime; how it works emphasis on youtube side, not coding side
     var details = {
         videoId: getVideoId(link),
@@ -251,7 +251,7 @@ function addRecomendation(message, link, startTime, endTime) {
                 return;
             }
 
-            message.reply("Video added to Recomendations for User!");
+            callback.reply("Video added to Recomendations for User!");
         })
 }
 

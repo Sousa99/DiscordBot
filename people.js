@@ -16,9 +16,9 @@ oauth2Client.setCredentials(JSON.parse(token));
 
 /**
  * Print my contact
- * @param message Message to wich is going to be answered
+ * @param callback used to output information
  */
-function getMyContact(message) {
+function getMyContact(callback) {
     var service = google.people('v1');
     service.people.get({
             auth: oauth2Client,
@@ -36,7 +36,7 @@ function getMyContact(message) {
             var string = "Contact:\n";
             string += printContact(person);
 
-            message.reply(string);
+            callback.reply(string);
         });
 }
 
