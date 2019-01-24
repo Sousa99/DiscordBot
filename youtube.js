@@ -80,7 +80,6 @@ function subscribersList(callback) {
             if (channels.length == 0) {
                 var string = "There are no users subscribed to the user.";
             } else {
-                // TODO: Exchange ":(" for emoji in discord
                 var string = "Channels/Users that are subscribed to the user: ( max 50 :( ) ";
                 channels.forEach((element, i) => {
                     string += "\n" + (i + 1) + ". " + printChannel(element);
@@ -233,6 +232,8 @@ function addRecomendation(callback, link, startTime, endTime) {
     if (endTime != undefined)
         details['endAt'] = endTime;
 
+    console.log(details);
+
     var service = google.youtube('v3');
     service.playlistItems.insert({
             auth: oauth2Client,
@@ -288,10 +289,8 @@ function printChannel(channel) {
  * @return string
  */
 function printVideo(video) {
-    // TODO: Problem with rating
-    var interactions = video.statistics.likeCount + video.statistics.dislikeCount;
-    console.log("Rating: " + (video.statistics.likeCount / interactions));
-    var rating = Math.round(video.statistics.likeCount / (video.statistics.likeCount + video.statistics.dislikeCount) * 100);
+    var interactions = Number(video.statistics.likeCount) + Number(video.statistics.dislikeCount);
+    var rating = (video.statistics.likeCount / interactions * 100).toFixed(2);
     return `${video.snippet.channelTitle} - ${video.snippet.title.substring(0,max_video_title)} - ${video.statistics.viewCount} views:
         Link: <https://www.youtube.com/watch?v=${video.id}> - ${rating}% like ratio`;
 }
