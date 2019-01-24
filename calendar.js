@@ -4,10 +4,10 @@ const googleAuth = require('google-auth-library');
 
 const {credential_google, token_google_calendar} = require('./config.json');
 
+let calendar_ids = [];
 const max_calendars_shown = 100;
 const max_events_shown = 15;
 const predefined_id = 'u77bbtdl86hevdfc2iau7v98uo@group.calendar.google.com';
-//const predefined_id = '9nihtqkga5a3ebfu8e9p3l5rls@group.calendar.google.com';
 
 const googleSecrets = JSON.parse(fs.readFileSync(credential_google)).installed;
 var oauth2Client = new googleAuth.OAuth2Client(
@@ -19,11 +19,16 @@ var oauth2Client = new googleAuth.OAuth2Client(
 const token = fs.readFileSync(token_google_calendar);
 oauth2Client.setCredentials(JSON.parse(token));
 
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
 /**
- * Lists all user's calendar.
+ * Update calendar id list and possibly print this information
  * @param callback used to output information
+ * @param print bool
  */
-async function listCalendars(callback) {
+function updateCalendarsList(callback, print) {
     const calendar = google.calendar('v3');
     calendar.calendarList.list({
             auth: oauth2Client,
@@ -37,25 +42,42 @@ async function listCalendars(callback) {
             }
 
             var string = "Calendários Disponíveis (máx " + max_calendars_shown + "):"
+            calendar_ids = [];
             result.data.items.forEach((element, i) => {
+                calendar_ids.push(element.id);
                 string += "\n" + i + ". " + printCalendar(element);
             });
 
-            callback.reply(string);
+            if (print)
+                callback.reply(string);
         }
     );
-  }
+}
+
+/**
+ * Lists all user's calendar.
+ * @param callback used to output information
+ */
+function listCalendars(callback) {
+    updateCalendarsList(callback, true);
+}
 
 /**
  * Lists the next max_events_shown events on the user's calendar.
  * @param callback used to output information
  * @param id id of the calendar to be shown
  */
-function listEvents(callback, id) {
+async function listEvents(callback, index) {
     const calendar = google.calendar('v3');
 
-    if (id == undefined)
+    if (index == undefined) {
         id = predefined_id;
+    } else {
+        updateCalendarsList(callback, false);
+        // TODO: Not the best way to await for end of updateCalendarsList (research Promises async/await)
+        await sleep(500);
+        id = calendar_ids[index];
+    }
 
     calendar.events.list({
             auth: oauth2Client,

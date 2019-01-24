@@ -24,7 +24,7 @@
         "admin": []
     },
     "help_calendar": {
-        "basic": ["$calendar listCalendars", "$calendar events ${calendarID}*"],
+        "basic": ["$calendar listCalendars", "$calendar events ${calendar number}*"],
         "admin": []
     },
     "help_youtube": {
