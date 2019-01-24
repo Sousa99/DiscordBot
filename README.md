@@ -1,6 +1,15 @@
 # DiscordBot
 First attempt to make a discord bot
 
+// -------------------------------------------------------------------- \\
+
+Instalation modules:
+npm install discord.js
+npm install googleapis --save
+npm install google-auth-library --save
+
+// -------------------------------------------------------------------- \\
+
 Structure Tree:
     C:.
     |   .gitignore
