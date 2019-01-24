@@ -52,7 +52,7 @@ bot.on('message', function(message) {
             if (args.length != 0)
                 break;
             
-            message.reply("pong");
+            output.reply("pong");
             break;
         
         case ("beep"):
@@ -60,7 +60,7 @@ bot.on('message', function(message) {
                 break;
 
             // TODO: Say only "beep"
-            message.reply("beep", {
+            output.reply("beep", {
                 tts: true 
             });
             break;
@@ -78,19 +78,19 @@ bot.on('message', function(message) {
             // TODO: Solve problem, promise not handled properly
             fs.appendFile(recommendations_path, string, (err) => {
                 if (err) console.error(err);
-                message.reply("Recommendation sent to administrator, thanks!");
+                output.reply("Recommendation sent to administrator, thanks!");
                 });
 
             break;
         
         case ("calendar"):
             if (args.length == 1 && args[0] == "listCalendars") {
-                calendar.listCalendars(message);
+                calendar.listCalendars(output);
             } else if ((args.length == 1 || args.length == 2) && args[0] == "events") {
                 calendar.listEvents(output, args[1]);
             } else {
                 const {help_calendar} = require('./config.json');
-                output.reply(printHelp(message, help_calendar));
+                output.reply(printHelp(message.author.id, help_calendar));
             }
 
             break;
