@@ -118,7 +118,7 @@ bot.on('message', function(message) {
 
         case ("people"):
             if (args.length == 1 && args[0] == "getMain") {
-                output.getMyContact(message);
+                output.getMyContact(output);
             }
 
             else {
