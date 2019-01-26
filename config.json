@@ -20,7 +20,7 @@
         "admin": "(Admin)"
     },
     "help_geral": {
-        "basic": ["$ping", "$beep", "$calendar", "$youtube", "$recommend ${recommendation}", "$instagram"],
+        "basic": ["$ping", "$beep", "$calendar", "$youtube", "$recommend ${recommendation}"],
         "admin": []
     },
     "help_calendar": {
@@ -33,10 +33,6 @@
     },
     "help_people": {
         "basic": ["$people getMain"],
-        "admin": []
-    },
-    "help_instagram": {
-        "basic": ["$instagram showUser"],
         "admin": []
     }
 }

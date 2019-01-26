@@ -127,18 +127,10 @@ bot.on('message', function(message) {
             }
 
             break;
-            
-        case ("instagram"):
-            if (Args.length == 1 && args[0] == "showUser") {
-
-            } else {
-                const {help_instagram} = require('./config.json');
-                output.reply(printHelp(message.author.id, help_instagram));
-            }
         
         default:
-        const {help_geral} = require('./config.json');
-        output.reply(printHelp(message.author.id, help_geral));
+            const {help_geral} = require('./config.json');
+            output.reply(printHelp(message.author.id, help_geral));
     }
 });
 

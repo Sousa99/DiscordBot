@@ -17,7 +17,6 @@ Structure Tree:
     │   calendar.js
     │   config.json
     │   index.js
-    │   instagram.js
     │   package-lock.json
     │   package.json
     │   people.js
