@@ -29,7 +29,7 @@ var options = {
 
 getJSON(options, function(err, result) {
     if (err) {
-        return console.log('Error wjile trying to access API');
+        return console.log('Error while trying to access API');
     }
 
     console.log(result);
